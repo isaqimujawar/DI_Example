@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.diexample.HiltExampleApplication
 import com.example.diexample.R
 import com.example.diexample.databinding.FragmentLoginBinding
+import com.example.diexample.login.model.IUserRepository
 import com.example.diexample.login.model.UserRepository
 import com.example.diexample.login.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +19,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private val binding get() = _binding!!
 
     //@Inject lateinit var viewModel: LoginViewModel
-    @Inject lateinit var userRepository: UserRepository
+    @Inject lateinit var userRepository: IUserRepository
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
