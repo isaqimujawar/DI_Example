@@ -1,11 +1,13 @@
 package com.example.diexample.login
 
+import android.app.Application
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.diexample.MyApplication
 import com.example.diexample.R
 import com.example.diexample.databinding.FragmentLoginBinding
 import com.example.diexample.login.model.LoginRetrofitService
@@ -28,22 +30,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         _binding = FragmentLoginBinding.bind(view)
 
-        // First, create retrofit which is the dependency of UserRemoteDataSource
-        val retrofit = LoginRetrofitService()
-
-        // Then, satisfy the dependencies of UserRepository
-        val localDataSource = UserLocalDataSource()
-        val remoteDataSource = UserRemoteDataSource(retrofit)
-
-        // Now you can create an instance of UserRepository that LoginViewModel needs
-        val userRepository = UserRepository(localDataSource, remoteDataSource)
+        // Get the AppContainer instance from the Application
+        val appContainer = (activity?.application as MyApplication).appContainer
 
         // Lastly, create an instance of LoginViewModel with userRepository
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        viewModel.setUserRepository(userRepository)
+        viewModel = ViewModelProvider(this).get(LoginViewModel(appContainer.userRepository)::class.java)
+        //viewModel.setUserRepository(appContainer.userRepository)      // Field Injection (or Setter Injection)
         binding.tvGreet.text = viewModel.getGreetings()
     }
 
