@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DIExample</string>
+    <string name="greeting">Hello there</string>
 </resources>
