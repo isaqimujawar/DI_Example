@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">DIExample</string>
+    <string name="app_name">Hilt Example</string>
     <string name="greeting">Hello there</string>
 </resources>

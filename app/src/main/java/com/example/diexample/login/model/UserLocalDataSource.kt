@@ -1,4 +1,6 @@
 package com.example.diexample.login.model
 
-class UserLocalDataSource : IUserLocalDataSource {
+import javax.inject.Inject
+
+class UserLocalDataSource @Inject constructor(): IUserLocalDataSource {
 }

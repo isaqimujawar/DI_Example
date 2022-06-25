@@ -1,4 +1,9 @@
 package com.example.diexample.login.model
 
-class UserRemoteDataSource(private val loginService: ILoginService) : IUserRemoteDataSource {
+import javax.inject.Inject
+
+class UserRemoteDataSource @Inject constructor(
+    private val loginService: ILoginService
+    ) : IUserRemoteDataSource {
+
 }

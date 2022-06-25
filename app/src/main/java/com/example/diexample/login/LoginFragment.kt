@@ -1,31 +1,34 @@
 package com.example.diexample.login
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
-import com.example.diexample.MyApplication
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.diexample.HiltExampleApplication
 import com.example.diexample.R
 import com.example.diexample.databinding.FragmentLoginBinding
+import com.example.diexample.login.model.UserRepository
 import com.example.diexample.login.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var viewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
-
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    //@Inject lateinit var viewModel: LoginViewModel
+    @Inject lateinit var userRepository: UserRepository
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
 
-        // Get the AppContainer instance from the Application
-        val appContainer = (activity?.application as MyApplication).appContainer
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel.setUserRepository(userRepository)      // Field Injection (or Setter Injection)
+        viewModel.saveUser("Dwayne Johnson", "therock@gmail.com")
 
-        // Lastly, create an instance of LoginViewModel with userRepository
-        viewModel = ViewModelProvider(this).get(LoginViewModel()::class.java)
-        viewModel.setUserRepository(appContainer.userRepository)      // Field Injection (or Setter Injection)
         binding.tvGreet.text = viewModel.getGreetings()
     }
 

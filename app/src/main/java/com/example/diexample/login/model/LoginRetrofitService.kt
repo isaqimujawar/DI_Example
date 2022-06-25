@@ -1,4 +1,6 @@
 package com.example.diexample.login.model
 
-class LoginRetrofitService : ILoginService {
+import javax.inject.Inject
+
+class LoginRetrofitService @Inject constructor() : ILoginService {
 }
